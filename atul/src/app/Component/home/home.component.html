@@ -1,0 +1,80 @@
+<div class="limiter">
+    <nav class="navbar navbar-default" style="background:#ebeeef">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">Blogger Application</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="login">Logout</a></li> <!-- To route back to login page-->
+            </ul>
+        </div>
+    </nav>
+    <div>
+        <br>
+        <h2>List of Blogs</h2>
+        <br>
+        <table class="table table-bordered">
+            <tr>
+                <th>S No.</th>
+                <th>Blog Title</th>
+                <th>Blog Content</th>
+                <th> Created On
+                    <button style="background: none;border: none;" *ngIf="!isDesc" (click)="sort('CreatedDate')"><i
+                            class="fa fa-arrow-down"></i></button>
+                    <button style="background: none;border: none;" *ngIf="isDesc" (click)="sort('CreatedDate')"><i
+                            class="fa fa-arrow-up"></i></button>
+                </th>
+                <th>Actions</th>
+            </tr>
+            <tr *ngFor="let Blog of BlogeerList; index as ndx">
+                <td>{{ ndx + 1 }}</td>
+                <td>
+                    <span *ngIf="ndx != selectedIndex">{{ Blog.Title }}</span>
+                    <span *ngIf="ndx == selectedIndex">
+                        <input type="text" [(ngModel)]="tempBlogDetail.Title">
+                    </span>
+                </td>
+                <td>
+                    <span *ngIf="ndx != selectedIndex">{{ Blog.Content }}</span>
+                    <span *ngIf="ndx == selectedIndex">
+                        <input type="text" [(ngModel)]="tempBlogDetail.Content">
+                    </span>
+                </td>
+                <td>
+                    <span *ngIf="ndx != selectedIndex">{{ Blog.CreatedDate }}</span>
+                    <span *ngIf="ndx == selectedIndex">
+                        <input type="text" [(ngModel)]="tempBlogDetail.CreatedDate">
+                    </span>
+                </td>
+                <td>
+                    <button class="btn btn-info" (click)="editClicked(ndx)" *ngIf="ndx != selectedIndex"><i
+                            class="fa fa-pencil"></i></button>
+                    <button class="btn btn-danger" (click)="deleteBlog(ndx)" *ngIf="ndx != selectedIndex"><i
+                            class="fa fa-trash"></i></button>
+                    <button class="btn btn-success" (click)="saveClicked(ndx)" *ngIf="ndx == selectedIndex"><i
+                            class="fa fa-floppy-o"></i></button>
+                    <button class="btn btn-warning" (click)="cancelClicked(ndx)" *ngIf="ndx == selectedIndex"><i
+                            class="fa fa-undo"></i></button>
+                </td>
+            </tr>
+        </table>
+
+        <br>
+        <h4>Add Blog</h4>
+        <div>
+            <button class="btn btn-primary" (click)="toggleForm()">{{ btnText }}</button>
+        </div>
+        <br>
+        <div class="form-group" *ngIf="formFlag">
+            <div> Blog Title:
+                <input class="form-control" type="text" [(ngModel)]="tempBlogDetail.Title">
+            </div>
+            <div> Blog Content:
+                <input class="form-control" type="text" [(ngModel)]="tempBlogDetail.Content">
+            </div>
+            <div>
+                <button class="btn btn-success" (click)="addBlog()">Add Blog</button>
+            </div>
+        </div>
+    </div>
+</div>
